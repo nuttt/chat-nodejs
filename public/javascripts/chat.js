@@ -23,6 +23,12 @@ $(function(){
     }
   }
 
+  function scroll_down(){
+    message_area.animate({ scrollTop: message_area.height() }, "300");
+  }
+
+  scroll_down();
+
   /* ----------[ socket logic ] ---------- */
 
   socket.emit("set_user_id", { user_id: user_id, room_id: room_id }, function(response){
@@ -49,6 +55,7 @@ $(function(){
   socket.on("message", function(data){
     data = JSON.parse(data);
     append_message(data);
+    scroll_down();
   });
 
 });
