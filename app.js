@@ -33,9 +33,15 @@ app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/chat/:user_id/:group_id', chat.index);
 
+
 server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-require('./routes/socket.js').initialize(server);
+require('./routes/socket').initialize(server);
+
+var sql = require('./routes/sql');
+sql.test(function(result){
+  console.log(result);
+});
 

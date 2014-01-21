@@ -16,6 +16,12 @@ $(function(){
     message_area.append('<div class="'+ type +'">' + message + '</div>');
   }
 
+  /* ----------[ socket logic ] ---------- */
+
+  socket.emit("set_user_id",{ user_id: user_id }, function(response){
+    console.log(JSON.parse(response));
+  });
+
   $('#chatform').submit(function(e){
     e.preventDefault();
     message = message_input.val();
