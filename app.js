@@ -83,3 +83,7 @@ require('./routes/socket').initialize(server, sql);
 // sql.add_message('Nuttapon.P', '4', 'test3', function(response){
 //   console.log(response);
 // });
+
+// sql.get_room_name('4', function(result){
+// 	console.log(result);
+// });

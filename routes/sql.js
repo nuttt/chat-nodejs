@@ -31,6 +31,17 @@ exports.add_message = function(user_id, room_id, message, callback){
   });
 };
 
+exports.get_room_name = function(room_id, callback){
+  connection.query('SELECT room_name FROM room WHERE room_id = "'+room_id+'"', function(err,row){
+    if(row.length > 0){
+      callback(row[0].room_name);
+    }
+    else{
+      callback(false);
+    }
+  });
+};
+
 exports.in_room = function(user_id, room_id, callback){
   connection.query('SELECT * FROM userroom WHERE user_id = "'+user_id+'" and room_id = "'+room_id+'"', function(err,row){
     callback(row.length == 1);

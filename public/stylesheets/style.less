@@ -86,10 +86,13 @@ body{
 	height: 82px;
 	border-bottom: 2px solid #c1b8b3;
 	.text-center{
+		height: 82px;
+		overflow: hidden;
+		width: 450px;
 		font-weight: bold;
 		font-size: 30px;
 		line-height: 82px;
-		margin: 0;
+		margin: 0 auto;
 	}
 	.btn2{
 		position: absolute;
@@ -175,11 +178,14 @@ h5{
 	font-weight: bold;
 	padding: 7px 10px;
 	border-top: 1px solid #dddad3;
-	border-bottom: 1px solid #dddad3;
+	border-bottom: 2px solid #dddad3;
 	margin: 0;
 	font-size: 16px;
 }
 .item{
+	height: 80px;
+	overflow: hidden;
+	background-color: #f2efe8;
 	color: #5c453d;
 	font-size: 21px;
 	font-weight: bold;
@@ -188,7 +194,6 @@ h5{
 	border-bottom: 1px solid #dddad3;
 	img{
 		margin-right: 10px;
-		margin-top: -1px;
 		width: 80px;
 		height: 80px;
 		background-color: #ccc;
@@ -197,6 +202,7 @@ h5{
 		background-color: #eee8da;
 		text-decoration: none;
 		color: #64463b;
+		cursor: pointer;
 	}
 }
 .left{
@@ -240,7 +246,8 @@ h5{
 	.time{
 		position: absolute;
 		right: -60px;
-		bottom: 10px;
+		bottom: 0;
+		margin: 0;
 		color: #675644;
 	}
 }
@@ -276,7 +283,7 @@ h5{
 		}
 	}
 	.time{
-		left: -60px;
+		left: -65px;
 	}
 }
 #content{

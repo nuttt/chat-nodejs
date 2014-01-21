@@ -14,9 +14,8 @@ $(function(){
   var room_id = url_match[2];
 
   function append_message(data){
-    time = Date.parse(data.timestamp);
-    date = new Date(time * 1000);
-    timeStr = date.getHours()+":"+date.getMinutes();
+    date = new Date(data.timestamp);
+    timeStr = date.toLocaleTimeString();
     text = "";
     if(data.type === 'systemMessage'){
       text = '<div class="system text-center"><p>' + data.message + '</p></div>';
@@ -35,9 +34,14 @@ $(function(){
 
   scroll_down();
 
+  $('.btn-back').click(function(e){
+    e.preventDefault();
+    window.location.pathname = "/list/"+user_id;
+  });
+
   /* ----------[ socket logic ] ---------- */
 
-  socket.emit("set_user_id", { user_id: user_id, room_id: room_id }, function(response){
+  socket.emit("set_user_room_id", { user_id: user_id, room_id: room_id }, function(response){
     response = JSON.parse(response);
     console.log(response);
     console.log(typeof response);
@@ -65,6 +69,11 @@ $(function(){
 
   socket.on("new_message", function(data, callback){
     append_message(data);
+  });
+
+  socket.on("room_name", function(data, callback){
+    console.log(data);
+    $('#room_name').html(data.room_name);
   });
 
 });

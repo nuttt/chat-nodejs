@@ -5,7 +5,33 @@ exports.initialize = function(server, sql){
 
   io.sockets.on('connection', function(socket){
 
+    function get_group_list(user_id, callback){
+      sql.get_joined_groups(user_id, function(joined_groups){
+        sql.get_available_groups(user_id, function(available_groups){
+          callback({
+            joined: joined_groups,
+            available: available_groups
+          });
+        });
+      });
+    }
+
     socket.on('set_user_id', function(data, callback){
+      var user_id = data.user_id;
+      sql.has_user(user_id, function(has_user){
+        if(has_user) {
+          socket.set('user_id', user_id);
+          get_group_list(user_id, function(group_list){
+            socket.send(JSON.stringify(group_list));
+          });
+        }
+        callback(JSON.stringify({
+          success: has_user
+        }));
+      });
+    });
+
+    socket.on('set_user_room_id', function(data, callback){
       var user_id = data.user_id;
       var room_id = data.room_id;
       sql.in_room(user_id, room_id, function(in_room){
@@ -13,6 +39,9 @@ exports.initialize = function(server, sql){
           socket.set('user_id', user_id);
           socket.set('room_id', room_id);
           socket.join(room_id);
+          sql.get_room_name(room_id, function(room_name){
+            socket.in(room_id).emit('room_name', { room_name: room_name }, function(){});
+          });
           response = JSON.stringify({
             type: 'systemMessage',
             message: "Welcome, " + user_id
