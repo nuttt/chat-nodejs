@@ -30,7 +30,7 @@ exports.get_user_in_group = function(room_id, callback){
 };
 
 exports.get_joined_groups = function(user_id, callback){
-  connection.query('SELECT room.room_id, room.name FROM userroom INNER JOIN room on room.room_id = userroom.room_id WHERE userroom.user_id = "'+user_id+'"', function(err,row){
+  connection.query('SELECT room.room_id, room_name FROM userroom INNER JOIN room on room.room_id = userroom.room_id WHERE userroom.user_id = "'+user_id+'"', function(err,row){
     callback(row);
   }); 
 };
