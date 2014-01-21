@@ -23,6 +23,12 @@ exports.add_message = function(user_id, room_id, message, callback){
   });
 };
 
+exports.in_room = function(user_id, room_id, callback){
+  connection.query('SELECT * FROM userroom WHERE user_id = "'+user_id+'" and room_id = "'+room_id+'"', function(err,row){
+    callback(row.length == 1);
+  });
+};
+
 exports.has_user = function(user_id, callback){
   connection.query('SELECT * FROM user WHERE user_id = "'+user_id+'"', function(err,row){
     callback(row.length == 1);

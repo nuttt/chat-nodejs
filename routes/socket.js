@@ -5,39 +5,39 @@ exports.initialize = function(server, sql){
 
   io.sockets.on('connection', function(socket){
 
-    // socket.send(JSON.stringify({
-    //   type: 'systemMessage',
-    //   message: 'Hello from socket'
-    // }));
-
     socket.on('set_user_id', function(data, callback){
-      console.log("asdfsdafds");
       var user_id = data.user_id;
-      sql.has_user(user_id, function(has_user){
-        if(has_user) {
+      var room_id = data.room_id;
+      sql.in_room(user_id, room_id, function(in_room){
+        if(in_room) {
           socket.set('user_id', user_id);
+          socket.set('room_id', room_id);
+          socket.join(room_id);
           response = JSON.stringify({
             type: 'systemMessage',
-            message: user_id + " has joined."
+            message: "Welcome, " + user_id
           });
-          socket.send(response);
-          socket.broadcast.send(response);
+          socket.in(room_id).send(response);
+          socket.in(room_id).broadcast.send(response);
         }
         callback(JSON.stringify({
-          success: has_user
+          success: in_room
         }));
       });
     });
 
     socket.on('message', function(data){
+      data = JSON.parse(data);
+      var room_id = "";
       socket.get('user_id', function(err, user_id){
         data.user_id = user_id;
       });
-      console.log(typeof data);
-      data = JSON.parse(data);
-      socket.broadcast.send(data);
+      socket.get('room_id', function(err, r){
+        room_id = r;
+      });
+      socket.in(room_id).broadcast.send(JSON.stringify(data));
       data.type = 'myMessage';
-      socket.send(JSON.stringify(data));
+      socket.in(room_id).send(JSON.stringify(data));
     });
 
   });
