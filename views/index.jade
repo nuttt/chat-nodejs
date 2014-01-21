@@ -1,5 +1,11 @@
 extends layout
 
+block append header
+  script(type='text/javascript', src='/javascripts/index.js')
+
 block content
-  h1= title
-  p Welcome to #{title}
+  .container
+    #intro.text-center
+      form.login-form
+        input#msg(type='text', placeholder='Enter client ID')
+        input#login.btn3.btn-send(type='submit', value='Login')
