@@ -1,0 +1,10 @@
+extends layout
+
+block append header
+  script(type='text/javascript', src='/javascripts/chat.js')
+
+block content
+  #message-area
+  form#chatform
+    input(type="text")#message
+    input(type="submit")
