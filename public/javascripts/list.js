@@ -13,10 +13,10 @@ $(function(){
 
   function append_message(data){
     for(i in data.joined){
-      joined_groups.append('<div data-id="'+ data.joined[i].room_id +'" class="item"><img src="http://lorempixel.com/80/80/nightlife/'+(i%10)+'" alt="">'+ data.joined[i].room_name +'</div>');
+      joined_groups.append('<div data-id="'+ data.joined[i].room_id +'" class="item"><img src="/images/group/'+data.joined[i].room_id+'.jpeg" alt="">'+ data.joined[i].room_name +'</div>');
     }
     for(i in data.available){
-      available_groups.append('<div data-id="'+ data.available[i].room_id +'" class="item"><img src="http://lorempixel.com/80/80/technics/'+(i%10)+'" alt="">'+ data.available[i].room_name +'</div>');
+      available_groups.append('<div data-id="'+ data.available[i].room_id +'" class="item"><img src="/images/group/'+data.available[i].room_id+'.jpeg" alt="">'+ data.available[i].room_name +'</div>');
     }
   }
 
