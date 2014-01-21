@@ -5,12 +5,12 @@ exports.initialize = function(server, sql){
 
   io.sockets.on('connection', function(socket){
 
-    function get_group_list(user_id, callback){
-      sql.get_joined_groups(user_id, function(joined_groups){
-        sql.get_available_groups(user_id, function(available_groups){
+    function get_room_list(user_id, callback){
+      sql.get_joined_rooms(user_id, function(joined_rooms){
+        sql.get_available_rooms(user_id, function(available_rooms){
           callback({
-            joined: joined_groups,
-            available: available_groups
+            joined: joined_rooms,
+            available: available_rooms
           });
         });
       });
@@ -21,7 +21,7 @@ exports.initialize = function(server, sql){
       sql.has_user(user_id, function(has_user){
         if(has_user) {
           socket.set('user_id', user_id);
-          get_group_list(user_id, function(group_list){
+          get_room_list(user_id, function(group_list){
             socket.send(JSON.stringify(group_list));
           });
         }
@@ -94,6 +94,19 @@ exports.initialize = function(server, sql){
 
       });
 
+    });
+
+    socket.on('join_room', function(data, callback){
+      var user_id = null;
+      var room_id = data.room_id;
+      socket.get('user_id', function(err, id){
+        user_id = id;
+        sql.join_room(user_id, room_id, function(success){
+          callback(JSON.stringify({
+            success: success
+          }));
+        });
+      });
     });
 
   });
