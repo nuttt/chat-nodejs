@@ -18,9 +18,9 @@ $(function(){
     if(data.type === 'systemMessage'){
       text = '<div class="system text-center"><p>' + data.message + '</p></div>';
     } else if(data.type === 'myMessage'){
-      text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">6:37 PM</p></div></div></div>';
+      text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">'+data.timestamp+'</p></div></div></div>';
     } else if(data.type === 'userMessage'){
-      text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">6:37 PM</p></div></div></div>';
+      text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+data.timestamp+'</p></div></div></div>';
     }
     message_area.append(text);
     scroll_down();
@@ -57,6 +57,10 @@ $(function(){
 
   socket.on("message", function(data){
     data = JSON.parse(data);
+    append_message(data);
+  });
+
+  socket.on("new_message", function(data, callback){
     append_message(data);
   });
 

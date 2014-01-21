@@ -17,9 +17,17 @@ exports.test = function(callback){
   });
 };
 
+exports.get_message = function(id, callback){
+  connection.query('SELECT * FROM msg WHERE id = '+id, function(err,row){
+    callback(row);
+  });
+};
+
 exports.add_message = function(user_id, room_id, message, callback){
-  connection.query('INSERT INTO msg (user_id,room_id,message) VALUES ("'+user_id+'", "'+room_id+'", "'+message+'")', function(err,row){
-    callback(!err);
+  connection.query('INSERT INTO msg (user_id,room_id,message) VALUES ("'+user_id+'", "'+room_id+'", "'+message+'")', function(err,result){
+    exports.get_message(result.insertId, function(response){
+      callback(response);
+    });
   });
 };
 
