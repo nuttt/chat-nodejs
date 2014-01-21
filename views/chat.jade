@@ -4,7 +4,114 @@ block append header
   script(type='text/javascript', src='/javascripts/chat.js')
 
 block content
-  #message-area
-  form#chatform
-    input(type="text")#message
-    input(type="submit")
+  .container
+    #header
+      p.text-center Group Name
+      a.btn2.btn-leave(href='', title='Leave Group') Leave Group
+      a.btn2.btn-back(href='index.html', title='Back') Back
+    //
+       /#header 
+    #content
+      .chat
+        .left
+          img.avatar(src='http://lorempixel.com/50/50', alt='')
+          .text
+            p.name Client 1
+            p.bubble
+              | Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.left 
+      //
+         /.chat 
+      .chat
+        .right
+          .text
+            p.bubble
+              | Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.right 
+      //
+         /.chat 
+      .chat
+        .right
+          .text
+            p.bubble
+              | Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.right 
+      //
+         /.chat 
+      .chat
+        .right
+          .text
+            p.bubble
+              | Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.right 
+      //
+         /.chat 
+      .system.text-center
+        p Nuttt.p has joined
+      //
+         /.system 
+      .chat
+        .right
+          .text
+            p.bubble
+              | ภาษาไทย Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World! Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.right 
+      //
+         /.chat 
+      .chat
+        .left
+          img.avatar(src='http://lorempixel.com/50/50', alt='')
+          .text
+            p.name Client 1
+            p.bubble Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.left 
+      //
+         /.chat 
+      .chat
+        .left
+          img.avatar(src='http://lorempixel.com/50/50', alt='')
+          .text
+            p.name Client 1
+            p.bubble Hello World!
+            p.time 6:37 PM
+          //
+             /.text 
+        //
+           /.left 
+      //
+         /.chat 
+    //
+       /#content 
+    #form
+      a.btn3(href='') a
+      a.btn3(href='') b
+      input#msg(type='text')
+      input.btn3.btn-send(type='submit', value='Send')
+    //
+       /#form 
+  //
+     /.container 

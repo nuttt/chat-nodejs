@@ -19,7 +19,7 @@ exports.test = function(callback){
 
 exports.has_user = function(user_id, callback){
   connection.query('SELECT * FROM user WHERE user_id = "'+user_id+'"', function(err,row){
-    callback(!err);
+    callback(row.length == 1);
   });
 };
 

@@ -38,9 +38,10 @@ server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-require('./routes/socket').initialize(server);
-
 var sql = require('./routes/sql');
+require('./routes/socket').initialize(server, sql);
+
+
 // sql.get_available_groups('Vibhavee.T', function(result){
 //   console.log(result);
 // });
@@ -73,6 +74,6 @@ var sql = require('./routes/sql');
 //   });
 // });
 
-sql.get_user_in_group('4', function(result){
-  console.log(result);
-});
+// sql.get_user_in_group('4', function(result){
+//   console.log(result);
+// });
