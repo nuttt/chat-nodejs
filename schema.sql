@@ -7,7 +7,7 @@
 #
 # Host: 127.0.0.1 (MySQL 5.6.15)
 # Database: node_chat
-# Generation Time: 2557-01-21 09:12:06 +0000
+# Generation Time: 2557-01-21 10:58:34 +0000
 # ************************************************************
 
 
@@ -30,7 +30,7 @@ CREATE TABLE `msg` (
   `user_id` varchar(20) DEFAULT NULL,
   `room_id` varchar(50) DEFAULT NULL,
   `message` text NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
   KEY `room_id_idx` (`room_id`),
@@ -43,7 +43,24 @@ LOCK TABLES `msg` WRITE;
 
 INSERT INTO `msg` (`id`, `user_id`, `room_id`, `message`, `timestamp`)
 VALUES
-	(1,NULL,NULL,'Hello World','0000-00-00 00:00:00');
+	(1,NULL,NULL,'Hello World','0000-00-00 00:00:00'),
+	(2,'Nuttapon.P','4','test','0000-00-00 00:00:00'),
+	(3,'Nuttapon.P','4','test2','0000-00-00 00:00:00'),
+	(4,'Nuttapon.P','4','test3','0000-00-00 00:00:00'),
+	(5,'Vibhavee.T','4','message 1','0000-00-00 00:00:00'),
+	(6,'Vibhavee.T','4','test','0000-00-00 00:00:00'),
+	(7,'Vibhavee.T','4','test','0000-00-00 00:00:00'),
+	(8,'Vibhavee.T','4','test','0000-00-00 00:00:00'),
+	(9,'Vibhavee.T','4','hey','0000-00-00 00:00:00'),
+	(10,'Vibhavee.T','4','te','0000-00-00 00:00:00'),
+	(11,'Vibhavee.T','4','heyyyy','0000-00-00 00:00:00'),
+	(12,'Vibhavee.T','4','hey','2014-01-21 17:42:06'),
+	(13,'Vibhavee.T','4','test','2014-01-21 17:50:27'),
+	(14,'Vibhavee.T','4','Hey','2014-01-21 17:52:42'),
+	(15,'Nuttapon.P','4','Hi ya','2014-01-21 17:52:47'),
+	(16,'Vibhavee.T','4','test','2014-01-21 17:53:53'),
+	(17,'Vibhavee.T','4','test','2014-01-21 17:54:04'),
+	(18,'Nuttapon.P','4','test','2014-01-21 17:57:12');
 
 /*!40000 ALTER TABLE `msg` ENABLE KEYS */;
 UNLOCK TABLES;

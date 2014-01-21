@@ -51,9 +51,9 @@ exports.initialize = function(server, sql){
         // socket.in(room_id).send(m);
 
         // message is row of database
-        message = message[0];
-        var userMessage = message;
-        var myMessage = message;
+        message = JSON.stringify(message[0]);
+        var userMessage = JSON.parse(message);
+        var myMessage = JSON.parse(message);
         userMessage.type = 'userMessage';
         myMessage.type = 'myMessage';
         socket.in(room_id).broadcast.emit('new_message', userMessage, function(response){
