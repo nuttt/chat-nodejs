@@ -6,7 +6,8 @@
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
-var chat = require('./routes/chat')
+var chat = require('./routes/chat');
+var list = require('./routes/list');
 var http = require('http');
 var path = require('path');
 
@@ -32,6 +33,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/chat/:user_id/:group_id', chat.index);
+app.get('/list/:user_id', list.index);
 
 
 server = http.createServer(app).listen(app.get('port'), function(){
