@@ -63,7 +63,7 @@ require('./routes/socket').initialize(server, sql);
 //   });
 // });
 
-// sql.get_unread('Vibhavee.T', '4', function(result){
+// sql.get_unread('Jamorn.S', '15', function(result){
 //   console.log(result);
 // });
 
@@ -76,4 +76,8 @@ require('./routes/socket').initialize(server, sql);
 
 // sql.get_user_in_group('4', function(result){
 //   console.log(result);
+// });
+
+// sql.add_message('Nuttapon.P', '4', 'test3', function(response){
+//   console.log(response);
 // });

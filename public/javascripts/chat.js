@@ -2,7 +2,8 @@ var socket = io.connect('/');
 
 $(function(){
 
-  var message_input = $('#message');
+  var message_input = $('#msg');
+  var message_form = $('#form');
   var message_area = $('#content');
 
   var url = document.URL;
@@ -13,8 +14,9 @@ $(function(){
   var group_id = url_match[2];
 
   function append_message(type, message){
-    if(type === )
-    message_area.append('<div class="'+ type +'">' + message + '</div>');
+    if(type === 'systemMessage'){
+      message_area.append('<div class="system text-center"><p>' + message + '</p></div>');
+    }
   }
 
   /* ----------[ socket logic ] ---------- */
@@ -23,7 +25,7 @@ $(function(){
     console.log(response);
   });
 
-  $('#chatform').submit(function(e){
+  message_form.submit(function(e){
     e.preventDefault();
     message = message_input.val();
     if(message.length > 0){

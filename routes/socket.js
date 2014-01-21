@@ -16,10 +16,12 @@ exports.initialize = function(server, sql){
       sql.has_user(user_id, function(has_user){
         if(has_user) {
           socket.set('user_id', user_id);
-          socket.send(JSON.stringify({
+          response = JSON.stringify({
             type: 'systemMessage',
-            message: 'Welcome, ' + user_id 
-          }));
+            message: user_id + " has joined."
+          });
+          socket.send(response);
+          socket.broadcast.send(response);
         }
         callback(JSON.stringify({
           success: has_user

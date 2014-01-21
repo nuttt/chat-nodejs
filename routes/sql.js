@@ -17,6 +17,12 @@ exports.test = function(callback){
   });
 };
 
+exports.add_message = function(user_id, room_id, message, callback){
+  connection.query('INSERT INTO msg (user_id,room_id,message) VALUES ("'+user_id+'", "'+room_id+'", "'+message+'")', function(err,row){
+    callback(!err);
+  });
+};
+
 exports.has_user = function(user_id, callback){
   connection.query('SELECT * FROM user WHERE user_id = "'+user_id+'"', function(err,row){
     callback(row.length == 1);
@@ -42,8 +48,8 @@ exports.get_available_groups = function(user_id, callback){
 };
 
 exports.join_group = function(user_id, room_id, callback){
-  // connection.query('INSERT INTO userroom VALUES ("'+room_id+'", "'+user_id+'", (SELECT max(id) FROM msg where room_id = "'+room_id+'"))', function(err,row){
-  connection.query('INSERT INTO userroom VALUES ("'+user_id+'", "'+room_id+'", null)', function(err,row){
+  connection.query('INSERT INTO userroom VALUES ("'+room_id+'", "'+user_id+'", (SELECT max(id) FROM msg where room_id = "'+room_id+'" or room_id is null))', function(err,row){
+  // connection.query('INSERT INTO userroom VALUES ("'+user_id+'", "'+room_id+'", null)', function(err,row){
     callback(!err);
   }); 
 };
