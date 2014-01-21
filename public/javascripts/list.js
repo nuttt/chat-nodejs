@@ -22,7 +22,6 @@ $(function(){
 
   joined_groups.on('click', '.item', function(){
     var room_id = $(this).data('id');
-    var room_name = $(this).text();
     window.location.pathname = '/chat/'+user_id+'/'+room_id;
   });
 
@@ -30,35 +29,29 @@ $(function(){
     var room_id = $(this).data('id');
     var room_name = $(this).text();
     if (confirm('You are not a member of "'+room_name+'" group, want to join?')) {
-      socket.emit("join_room", { room_id: room_id }, function(response){
+      socket.emit('join_room', { room_id: room_id }, function(response){
         response = JSON.parse(response);
-        console.log(response);
-        console.log(typeof response);
         if(response.success){
           window.location.pathname = '/chat/'+user_id+'/'+room_id;
         }
       });
-      console.log('join');
     } else {
-      console.log('no thanks');
+      // console.log('no thanks');
     }
   });
 
 
   /* ----------[ socket logic ] ---------- */
 
-  socket.emit("set_user_id", { user_id: user_id }, function(response){
+  socket.emit('set_user_id', { user_id: user_id }, function(response){
     response = JSON.parse(response);
-    console.log(response);
-    console.log(typeof response);
     if(!response.success){
-      window.location.pathname = "/";
+      window.location.pathname = '/';
     }
   });
 
-  socket.on("message", function(data){
+  socket.on('message', function(data){
     data = JSON.parse(data);
-    //console.log(data);
     append_message(data);
   });
 

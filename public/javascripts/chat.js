@@ -36,17 +36,17 @@ $(function(){
 
   $('.btn-back').click(function(e){
     e.preventDefault();
-    window.location.pathname = "/list/"+user_id;
+    window.location.pathname = '/list/'+user_id;
   });
 
   /* ----------[ socket logic ] ---------- */
 
-  socket.emit("set_user_room_id", { user_id: user_id, room_id: room_id }, function(response){
+  socket.emit('set_user_room_id', { user_id: user_id, room_id: room_id }, function(response){
     response = JSON.parse(response);
     console.log(response);
     console.log(typeof response);
     if(!response.success){
-      window.location.pathname = "/";
+      window.location.pathname = '/';
     }
   });
 
@@ -59,19 +59,33 @@ $(function(){
         message: message
       }));
     }
-    message_input.val("");
+    message_input.val('');
   });
 
-  socket.on("message", function(data){
+  $('.btn-leave').click(function(e){
+    e.preventDefault();
+    if(confirm('Are you sure to leave this group?')) {
+      socket.emit('leave_room', { room_id: room_id }, function(response){
+        response = JSON.parse(response);
+        if(response.success){
+          window.location.pathname = '/list/'+user_id;
+        }
+      });
+    } else {
+      // console.log('no thanks');
+    }
+  });
+
+  socket.on('message', function(data){
     data = JSON.parse(data);
     append_message(data);
   });
 
-  socket.on("new_message", function(data, callback){
+  socket.on('new_message', function(data, callback){
     append_message(data);
   });
 
-  socket.on("room_name", function(data, callback){
+  socket.on('room_name', function(data, callback){
     console.log(data);
     $('#room_name').html(data.room_name);
   });
