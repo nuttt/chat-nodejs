@@ -109,6 +109,19 @@ exports.initialize = function(server, sql){
       });
     });
 
+    socket.on('leave_room', function(data, callback){
+      var user_id = null;
+      var room_id = data.room_id;
+      socket.get('user_id', function(err, id){
+        user_id = id;
+        sql.leave_room(user_id, room_id, function(success){
+          callback(JSON.stringify({
+            success: success
+          }));
+        });
+      });
+    });
+
   });
 
 
