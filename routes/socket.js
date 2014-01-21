@@ -122,7 +122,14 @@ exports.initialize = function(server, sql){
       });
     });
 
+    socket.on('get_unread', function(data, callback){
+      socket.get('user_id', function(err, u_id){
+        socket.get('room_id', function(err, r_id){
+          sql.get_unread(u_id, r_id, function(data){
+            callback(JSON.stringify(data));
+          });
+        });
+      });
+    });
   });
-
-
 };
