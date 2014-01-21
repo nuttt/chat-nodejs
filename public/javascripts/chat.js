@@ -14,13 +14,16 @@ $(function(){
   var room_id = url_match[2];
 
   function append_message(data){
+    time = Date.parse(data.timestamp);
+    date = new Date(time * 1000);
+    timeStr = date.getHours()+":"+date.getMinutes();
     text = "";
     if(data.type === 'systemMessage'){
       text = '<div class="system text-center"><p>' + data.message + '</p></div>';
     } else if(data.type === 'myMessage'){
-      text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">'+data.timestamp+'</p></div></div></div>';
+      text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">'+timeStr+'</p></div></div></div>';
     } else if(data.type === 'userMessage'){
-      text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+data.timestamp+'</p></div></div></div>';
+      text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+timeStr+'</p></div></div></div>';
     }
     message_area.append(text);
     scroll_down();
