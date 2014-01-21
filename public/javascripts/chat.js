@@ -14,17 +14,20 @@ $(function(){
   var room_id = url_match[2];
 
   function append_message(data){
+    text = "";
     if(data.type === 'systemMessage'){
-      message_area.append('<div class="system text-center"><p>' + data.message + '</p></div>');
+      text = '<div class="system text-center"><p>' + data.message + '</p></div>';
     } else if(data.type === 'myMessage'){
-      message_area.append('<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">6:37 PM</p></div></div></div>');
+      text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">6:37 PM</p></div></div></div>';
     } else if(data.type === 'userMessage'){
-      message_area.append('<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">6:37 PM</p></div></div></div>');
+      text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">6:37 PM</p></div></div></div>';
     }
+    message_area.append(text);
+    scroll_down();
   }
 
   function scroll_down(){
-    message_area.animate({ scrollTop: message_area.height() }, "300");
+    message_area.animate({ scrollTop: message_area[0].scrollHeight }, "500");
   }
 
   scroll_down();
@@ -55,7 +58,6 @@ $(function(){
   socket.on("message", function(data){
     data = JSON.parse(data);
     append_message(data);
-    scroll_down();
   });
 
 });
