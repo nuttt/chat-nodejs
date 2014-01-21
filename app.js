@@ -44,35 +44,35 @@ var sql = require('./routes/sql');
 // sql.get_available_groups('Vibhavee.T', function(result){
 //   console.log(result);
 // });
-sql.get_joined_groups('Vibhavee.T', function(result){
-  console.log(result);
-});
+// sql.get_joined_groups('Vibhavee.T', function(result){
+//   console.log(result);
+// });
 
-// sql.join_group('Vibhavee.T', 2, function(result){
+// sql.join_group('Vibhavee.T', '2', function(result){
 //   console.log(result);
 //  sql.get_joined_groups('Vibhavee.T', function(result){
 //    console.log(result);
 //  });
 // });
 
-// sql.leave_group('Vibhavee.T', 2, function(result){
+// sql.leave_group('Vibhavee.T', '2', function(result){
 //   console.log(result);
 //   sql.get_joined_groups('Vibhavee.T', function(result){
 //     console.log(result);
 //   });
 // });
 
-// sql.get_unread('Vibhavee.T', 1, function(result){
+// sql.get_unread('Vibhavee.T', '4', function(result){
 //   console.log(result);
 // });
 
-// sql.set_last_read('Vibhavee.T', 1, 2, function(result){
+// sql.set_last_read('Vibhavee.T', '4', 2, function(result){
 //   console.log(result);
-//   sql.get_unread('Vibhavee.T', 1, function(result){
+//   sql.get_unread('Vibhavee.T', '4', function(result){
 //     console.log(result);
 //   });
 // });
 
-// sql.get_user_in_group(1, function(result){
-//   console.log(result);
-// });
+sql.get_user_in_group('4', function(result){
+  console.log(result);
+});
