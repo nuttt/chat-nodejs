@@ -41,34 +41,34 @@ server = http.createServer(app).listen(app.get('port'), function(){
 require('./routes/socket').initialize(server);
 
 var sql = require('./routes/sql');
-// sql.get_available_groups('Vibhavee.t', function(result){
-//   console.log(result);
-// });
-// sql.get_joined_groups('Vibhavee.t', function(result){
+sql.get_available_groups('Vibhavee.T', function(result){
+  console.log(result);
+});
+// sql.get_joined_groups('Vibhavee.T', function(result){
 //   console.log(result);
 // });
 
-// sql.join_group('Vibhavee.t', 2, function(result){
+// sql.join_group('Vibhavee.T', 2, function(result){
 //   console.log(result);
-//  sql.get_joined_groups('Vibhavee.t', function(result){
+//  sql.get_joined_groups('Vibhavee.T', function(result){
 //    console.log(result);
 //  });
 // });
 
-// sql.leave_group('Vibhavee.t', 2, function(result){
+// sql.leave_group('Vibhavee.T', 2, function(result){
 //   console.log(result);
-//   sql.get_joined_groups('Vibhavee.t', function(result){
+//   sql.get_joined_groups('Vibhavee.T', function(result){
 //     console.log(result);
 //   });
 // });
 
-// sql.get_unread('Vibhavee.t', 1, function(result){
+// sql.get_unread('Vibhavee.T', 1, function(result){
 //   console.log(result);
 // });
 
-// sql.set_last_read('Vibhavee.t', 1, 2, function(result){
+// sql.set_last_read('Vibhavee.T', 1, 2, function(result){
 //   console.log(result);
-//   sql.get_unread('Vibhavee.t', 1, function(result){
+//   sql.get_unread('Vibhavee.T', 1, function(result){
 //     console.log(result);
 //   });
 // });

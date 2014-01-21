@@ -1,8 +1,8 @@
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
+  host     : '127.0.0.1',
+  user     : 'node',
+  password : 'node',
   database : 'node_chat'
 });
 
