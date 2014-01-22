@@ -96,6 +96,11 @@ $(function(){
 
   socket.on('new_message', function(data, callback){
     append_message(data);
+    callback({
+      user_id: user_id,
+      room_id: room_id,
+      last_read: data.id
+    });
   });
 
   socket.on('room_name', function(data, callback){

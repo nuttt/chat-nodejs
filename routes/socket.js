@@ -85,12 +85,15 @@ exports.initialize = function(server, sql){
         var myMessage = JSON.parse(message);
         userMessage.type = 'userMessage';
         myMessage.type = 'myMessage';
-        socket.in(room_id).broadcast.emit('new_message', userMessage, function(response){
 
-        });
-        socket.in(room_id).emit('new_message', myMessage, function(response){
+        update_last_read = function(response){
+          // console.log(">>>>>>>>>>>> response:" + (typeof response));
+          // console.log(JSON.stringify(response));
+          sql.set_last_read(response.user_id, response.room_id, response.last_read, function(e){});
+        };
 
-        });
+        socket.in(room_id).broadcast.emit('new_message', userMessage, update_last_read);
+        socket.in(room_id).emit('new_message', myMessage, update_last_read);
 
       });
 
