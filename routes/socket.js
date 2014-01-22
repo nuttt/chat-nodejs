@@ -3,6 +3,10 @@ var io = require('socket.io');
 exports.initialize = function(server, sql){
   io = io.listen(server);
 
+  var update_last_read = function(response){
+    sql.set_last_read(response.user_id, response.room_id, response.last_read, function(e){});
+  };
+
   io.sockets.on('connection', function(socket){
 
     function get_room_list(user_id, callback){
@@ -86,12 +90,6 @@ exports.initialize = function(server, sql){
         userMessage.type = 'userMessage';
         myMessage.type = 'myMessage';
 
-        update_last_read = function(response){
-          // console.log(">>>>>>>>>>>> response:" + (typeof response));
-          // console.log(JSON.stringify(response));
-          sql.set_last_read(response.user_id, response.room_id, response.last_read, function(e){});
-        };
-
         socket.in(room_id).broadcast.emit('new_message', userMessage, update_last_read);
         socket.in(room_id).emit('new_message', myMessage, update_last_read);
 
@@ -125,14 +123,17 @@ exports.initialize = function(server, sql){
       });
     });
 
-    socket.on('get_unread', function(data, callback){
+    socket.on('get_unread', function(data){
       socket.get('user_id', function(err, u_id){
         socket.get('room_id', function(err, r_id){
           sql.get_unread(u_id, r_id, function(data){
-            callback(JSON.stringify(data));
+            socket.emit('reply_unread', data, function(ack){
+              update_last_read(ack);
+            });
           });
         });
       });
     });
+    
   });
 };

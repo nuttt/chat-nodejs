@@ -52,16 +52,19 @@ $(function(){
     if(!response.success){
       window.location.pathname = '/';
     } else {
-      get_unread();
+      socket.emit('get_unread',{});
     }
   });
 
-  function get_unread(){
-    socket.emit('get_unread', {}, function(response){
-      response = JSON.parse(response);
-      append_unread(response);
+  socket.on('reply_unread', function(data, acknowledge){
+    // data = JSON.parse(data);
+    append_unread(data);
+    acknowledge({
+      user_id: user_id,
+      room_id: room_id,
+      last_read: data[data.length - 1].id
     });
-  }
+  });
 
   message_form.submit(function(e){
     e.preventDefault();

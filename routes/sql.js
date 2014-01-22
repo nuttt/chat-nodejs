@@ -1,14 +1,20 @@
-var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : '127.0.0.1',
-  user     : 'node',
-  password : 'node',
-  database : 'node_chat'
-});
+// var mysql      = require('mysql');
+// var connection = mysql.createConnection({
+//   host     : '127.0.0.1',
+//   user     : 'node',
+//   password : 'node',
+//   database : 'node_chat'
+// });
+
+var connection;
 
 exports.get_connection = function(){
   return connection;
 };
+
+exports.set_connection = function(c){
+  connection = c;
+}
 
 exports.test = function(callback){
   var res;

@@ -10,7 +10,7 @@ var chat = require('./routes/chat');
 var list = require('./routes/list');
 var http = require('http');
 var path = require('path');
-
+var mysql = require('mysql');
 var app = express();
 
 // all environments
@@ -30,6 +30,27 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
+app.configure('development', function() {
+  console.log('Using development settings.');
+  app.set('connection', mysql.createConnection({
+    host: '127.0.0.1',
+    database: 'node_chat',
+    user: 'node',
+    port: '3306',
+    password: 'node'}));
+  app.use(express.errorHandler());
+});
+
+app.configure('production', function() {
+  console.log('Using production settings.');
+  app.set('connection', mysql.createConnection({
+    host: process.env.RDS_HOSTNAME,
+    database: 'node_chat',
+    user: process.env.RDS_USERNAME,
+    password: process.env.RDS_PASSWORD,
+    port: process.env.RDS_PORT}));
+});
+
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/chat/:user_id/:group_id', chat.index);
@@ -41,6 +62,7 @@ server = http.createServer(app).listen(app.get('port'), function(){
 });
 
 var sql = require('./routes/sql');
+sql.set_connection(app.get('connection'));
 require('./routes/socket').initialize(server, sql);
 
 
