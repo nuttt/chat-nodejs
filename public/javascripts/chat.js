@@ -58,12 +58,20 @@ $(function(){
 
   socket.on('reply_unread', function(data, acknowledge){
     // data = JSON.parse(data);
+    console.log(data);
     append_unread(data);
-    acknowledge({
-      user_id: user_id,
-      room_id: room_id,
-      last_read: data[data.length - 1].id
-    });
+    if(data.length > 0){
+      acknowledge({
+        status: true,
+        user_id: user_id,
+        room_id: room_id,
+        last_read: data[data.length - 1].id
+      });
+    } else {
+      acknowledge({
+        status: false
+      });
+    }
   });
 
   message_form.submit(function(e){
@@ -106,8 +114,19 @@ $(function(){
     });
   });
 
+  $('#room_name').click(function(){
+    var name = prompt('Enter new room name', $('#room_name').text());
+    if(name){
+      socket.emit('change_room_name', {
+        room_id: room_id,
+        room_name: name
+      });
+    }
+  });
+
   socket.on('room_name', function(data, callback){
     $('#room_name').html(data.room_name);
   });
+
 
 });

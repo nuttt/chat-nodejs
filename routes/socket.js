@@ -123,12 +123,32 @@ exports.initialize = function(server, sql){
       });
     });
 
+    socket.on('change_room_name', function(data, callback){
+
+      var room_id = data.room_id;
+      var room_name = data.room_name;
+
+      sql.set_room_name(room_id, room_name, function(e){
+        socket.in(room_id).broadcast.emit('room_name',{room_name: room_name});
+        socket.in(room_id).emit('room_name',{room_name: room_name});
+        message = JSON.stringify({
+          type: 'systemMessage',
+          message: 'Room name is changed to ' + room_name
+        });
+        socket.in(room_id).broadcast.send(message);
+        socket.in(room_id).send(message);
+      });
+
+    });
+
     socket.on('get_unread', function(data){
       socket.get('user_id', function(err, u_id){
         socket.get('room_id', function(err, r_id){
           sql.get_unread(u_id, r_id, function(data){
             socket.emit('reply_unread', data, function(ack){
-              update_last_read(ack);
+              if(ack.status){
+                update_last_read(ack);
+              }
             });
           });
         });

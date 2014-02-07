@@ -85,6 +85,12 @@ exports.join_room = function(user_id, room_id, callback){
   }); 
 };
 
+exports.set_room_name = function(room_id, room_name, callback){
+  connection.query('UPDATE room SET room_name = "'+room_name+'" WHERE room_id = "'+room_id+'"', function(err,row){
+    callback(!err);
+  }); 
+};
+
 exports.leave_room = function(user_id, room_id, callback){
   connection.query('DELETE FROM userroom WHERE user_id = "'+user_id+'" and room_id = "'+room_id+'"', function(err,row){
     callback(!err);
