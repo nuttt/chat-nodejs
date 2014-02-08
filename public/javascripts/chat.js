@@ -1,5 +1,7 @@
 var socket = io.connect('/');
 
+var min_msg_id = null;
+
 $(function(){
 
   var message_input = $('#msg');
@@ -19,9 +21,15 @@ $(function(){
       append_message(data[i]);
     }
   }
-  function append_message(data){
+  function append_message(data, prepend){
+    if (prepend === undefined) prepend = false;
     date = new Date(data.timestamp);
     timeStr = date.toLocaleTimeString();
+    if(data.id){
+      if(min_msg_id == null || data.id < min_msg_id){
+        min_msg_id = data.id;
+      }
+    }
     text = "";
     if(data.type === 'systemMessage'){
       text = '<div class="system text-center"><p>' + data.message + '</p></div>';
@@ -30,8 +38,17 @@ $(function(){
     } else if(data.type === 'userMessage'){
       text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+timeStr+'</p></div></div></div>';
     }
-    message_area.append(text);
-    scroll_down();
+    console.log(text);
+    console.log(prepend);
+    if(prepend)
+    {
+      message_area.prepend(text);
+    }
+    else{
+      scroll_down();
+      message_area.append(text);
+    }
+    
   }
 
   function scroll_down(){
@@ -126,6 +143,26 @@ $(function(){
 
   socket.on('room_name', function(data, callback){
     $('#room_name').html(data.room_name);
+  });
+
+
+  $('#request_old_msg').click(function(e){
+    e.preventDefault();
+    // remove button
+    // if(min_msg_id != null){
+      socket.emit('request_old_msg', {
+        room_id: room_id,
+        max: min_msg_id
+      }, function(messages){
+        // append to top
+        for(i in messages){
+          console.log(messages[i]);
+          append_message(messages[i], true);
+        }
+        console.log(messages);
+      });
+    // }
+    // return button
   });
 
 

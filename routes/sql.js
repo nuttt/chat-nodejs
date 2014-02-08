@@ -108,3 +108,15 @@ exports.set_last_read = function(user_id, room_id, msg_id, callback){
     callback(!err);
   }); 
 };
+
+exports.get_old_msg = function(room_id, max, callback){
+  if(max == null){
+    connection.query('SELECT * FROM msg where room_id = "'+room_id+'" ORDER BY id DESC LIMIT 10', function(err,row){
+      callback(row);
+    });
+  } else {
+    connection.query('SELECT * FROM msg where id < '+max+' and room_id = "'+room_id+'" ORDER BY id DESC LIMIT 10', function(err,row){
+      callback(row);
+    });
+  }
+};

@@ -154,6 +154,23 @@ exports.initialize = function(server, sql){
         });
       });
     });
+
+    socket.on('request_old_msg', function(data, callback){
+      socket.get('user_id', function(err, u_id){
+        socket.get('room_id', function(err, r_id){
+          sql.get_old_msg(r_id, data.max, function(data){
+            for(i in data){
+              if(data[i].user_id === u_id){
+                data[i].type = "myMessage";
+              } else {
+                data[i].type = "userMessage";
+              }
+            }
+            callback(data);
+          });
+        });
+      });
+    });
     
   });
 };
