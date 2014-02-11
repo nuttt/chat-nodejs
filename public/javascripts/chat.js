@@ -6,7 +6,8 @@ $(function(){
 
   var message_input = $('#msg');
   var message_form = $('#form');
-  var message_area = $('#content');
+  var content_area = $('#content');
+  var message_area = $('#content .chat_container');
 
   var url = document.URL;
   var pattern = /.*\/(.*)\/(.*)/;
@@ -36,7 +37,7 @@ $(function(){
     } else if(data.type === 'myMessage'){
       text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">'+timeStr+'</p></div></div></div>';
     } else if(data.type === 'userMessage'){
-      text = '<div class="chat"><div class="left"><img src="http://lorempixel.com/50/50" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+timeStr+'</p></div></div></div>';
+      text = '<div class="chat"><div class="left"><img src="/images/group/'+ user_id.length +'.jpeg" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+timeStr+'</p></div></div></div>';
     }
     console.log(text);
     console.log(prepend);
@@ -52,7 +53,7 @@ $(function(){
   }
 
   function scroll_down(){
-    message_area.animate({ scrollTop: message_area[0].scrollHeight }, "500");
+    content_area.animate({ scrollTop: message_area[0].scrollHeight }, "500");
   }
 
   scroll_down();
