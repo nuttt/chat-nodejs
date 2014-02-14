@@ -13,10 +13,10 @@ $(function(){
 
   function append_message(data){
     for(i in data.joined){
-      joined_groups.append('<div data-id="'+ data.joined[i].room_id +'" class="item"><img src="/images/group/'+data.joined[i].room_id+'.jpeg" alt="">'+ data.joined[i].room_name +'</div>');
+      joined_groups.append('<div data-id="'+ data.joined[i].room_id +'" class="item"><img src="/images/group/'+(data.joined[i].room_id%30)+'.jpeg" alt="">'+ data.joined[i].room_name +'</div>');
     }
     for(i in data.available){
-      available_groups.append('<div data-id="'+ data.available[i].room_id +'" class="item"><img src="/images/group/'+data.available[i].room_id+'.jpeg" alt="">'+ data.available[i].room_name +'</div>');
+      available_groups.append('<div data-id="'+ data.available[i].room_id +'" class="item"><img src="/images/group/'+(data.available[i].room_id%30)+'.jpeg" alt="">'+ data.available[i].room_name +'</div>');
     }
   }
 
@@ -53,6 +53,14 @@ $(function(){
   socket.on('message', function(data){
     data = JSON.parse(data);
     append_message(data);
+  });
+
+  $('#new-group').click(function(e){
+    e.preventDefault();
+    var room_name = prompt('Enter new room name', $('#room_name').text());
+    socket.emit('new_room', {room_name: room_name}, function(){
+      location.reload();
+    });
   });
 
 });

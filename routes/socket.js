@@ -171,6 +171,12 @@ exports.initialize = function(server, sql){
         });
       });
     });
+
+    socket.on('new_room', function(data, callback){
+      sql.add_room(data.room_name, function(){
+        callback();
+      });
+    });
     
   });
 };

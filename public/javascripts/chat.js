@@ -16,6 +16,11 @@ $(function(){
   var user_id = url_match[1];
   var room_id = url_match[2];
 
+  function zeroPad(num, places) {
+    var zero = places - num.toString().length + 1;
+    return Array(+(zero > 0 && zero)).join("0") + num;
+  }
+
   function append_unread(data){
     for(i in data){
       data[i].type = 'userMessage';
@@ -25,7 +30,10 @@ $(function(){
   function append_message(data, prepend){
     if (prepend === undefined) prepend = false;
     date = new Date(data.timestamp);
-    timeStr = date.toLocaleTimeString();
+    // timeStr = date.toTimeString();
+    timeStr = zeroPad(date.getHours(), 2)+':'+zeroPad(date.getMinutes(), 2);
+    // timeStr = date.toLocaleTimeString('th-TH', {timeZone: 'Asia/Bangkok', formatMatcher: 'hour, minute'});
+
     if(data.id){
       if(min_msg_id == null || data.id < min_msg_id){
         min_msg_id = data.id;
@@ -37,7 +45,7 @@ $(function(){
     } else if(data.type === 'myMessage'){
       text = '<div class="chat"><div class="right"><div class="text"><p class="bubble">' + data.message + '</p><p class="time">'+timeStr+'</p></div></div></div>';
     } else if(data.type === 'userMessage'){
-      text = '<div class="chat"><div class="left"><img src="/images/group/'+ user_id.length +'.jpeg" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+timeStr+'</p></div></div></div>';
+      text = '<div class="chat"><div class="left"><img src="/images/group/'+ data.user_id.length +'.jpeg" alt="" class="avatar"><div class="text"><p class="name">'+data.user_id+'</p><p class="bubble">'+data.message+'</p><p class="time">'+timeStr+'</p></div></div></div>';
     }
     console.log(text);
     console.log(prepend);
